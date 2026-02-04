@@ -2,9 +2,12 @@
 
 import { type Request, type Response } from 'express';
 import app from './app.js';
-import helmet from 'helmet';
+import { BASE_URL, PORT } from './config/utils.js';
 
-const PORT: number = 3000;
+const port = PORT || 3000;
+const baseUrl = BASE_URL;
+
+/*
 
 app.use(
   helmet.contentSecurityPolicy({
@@ -18,6 +21,8 @@ app.use(
   }),
 );
 
+*/
+
 app.get('/', (_req: Request, res: Response) => {
   res.json({
     success: true,
@@ -25,6 +30,6 @@ app.get('/', (_req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Application running on ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on ${baseUrl}:${port}`);
 });
