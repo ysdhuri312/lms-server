@@ -1,11 +1,12 @@
 /** @format */
 
-import { type Request, type Response } from 'express';
 import app from './app.js';
 import { BASE_URL, PORT } from './config/utils.js';
+import { connectDB, disconnectDB } from './config/db.js';
 
-const port = PORT || 3000;
-const baseUrl = BASE_URL;
+const port = PORT;
+const baseUrl = BASE_URL as string;
+let server: ReturnType<typeof app.listen> | undefined;
 
 /*
 
@@ -23,13 +24,51 @@ app.use(
 
 */
 
-app.get('/', (_req: Request, res: Response) => {
-  res.json({
-    success: true,
-    message: 'Welcome to API v1.0.0',
-  });
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    server = app.listen(port, () => {
+      console.log(`✅ Server running on ${baseUrl}:${port}`); // eslint-disable-line no-console
+    });
+
+    server.on('error', async (err) => {
+      console.error('❌ Server error:', err); // eslint-disable-line no-console
+      await disconnectDB();
+      process.exit(1);
+    });
+  } catch (error) {
+    console.error('❌ Startup failed. Exiting...', error); // eslint-disable-line no-console
+    process.exit(1);
+  }
+};
+
+const shutdown = async (signal: string) => {
+  console.log(`\n🛑 Received ${signal}. Shutting down...`); // eslint-disable-line no-console
+
+  if (server) {
+    server.close(() => {
+      console.log('🛑 HTTP server closed'); // eslint-disable-line no-console
+    });
+  }
+
+  await disconnectDB();
+  process.exit(0);
+};
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+
+process.on('unhandledRejection', async (reason) => {
+  console.error('❌ Unhandled rejection:', reason); // eslint-disable-line no-console
+  await disconnectDB();
+  process.exit(1);
 });
 
-app.listen(port, () => {
-  console.log(`Server running on ${baseUrl}:${port}`);
+process.on('uncaughtException', async (err) => {
+  console.error('❌ Uncaught exception:', err); // eslint-disable-line no-console
+  await disconnectDB();
+  process.exit(1);
 });
+
+startServer();
