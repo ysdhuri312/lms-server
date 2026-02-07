@@ -6,8 +6,10 @@ import express, {
   type Response,
 } from 'express';
 import path from 'node:path';
-import errorHandler from './handlers/error.handler.js';
-import { CustomErrorHandler } from './handlers/CustomError.handler.js';
+import errorHandler from './handlers/error.js';
+import { CustomErrorHandler } from './handlers/CustomError.js';
+
+import v1Routes from './routes/v1';
 
 const app = express();
 
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use(express.static(path.join(path.resolve(), '/public')));
 
 // Home Route
-app.get('/', (_req: Request, res: Response, next: NextFunction) => {
+app.get('/api/v1/', (_req: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Welcome to API v1.0.0',
@@ -24,6 +26,9 @@ app.get('/', (_req: Request, res: Response, next: NextFunction) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Router v1
+app.use('/api/v1/', v1Routes);
 
 // 404 route
 app.use((req: Request, _res: Response, next: NextFunction) => {

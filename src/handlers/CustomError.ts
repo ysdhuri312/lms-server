@@ -1,12 +1,12 @@
 /** @format */
 
 export class CustomErrorHandler extends Error {
-  public location: string;
+  public source: string;
   public statusCode: number;
 
-  constructor(statusCode: number, message: string, location: string) {
+  constructor(statusCode: number, message: string, source: string = 'Unknown') {
     super(message);
-    this.location = location;
+    this.source = source;
     this.statusCode = statusCode;
 
     Error.captureStackTrace(this, this.constructor);

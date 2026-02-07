@@ -6,7 +6,7 @@ import { NODE_ENV } from '../config/utils.js';
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || 'Internal server error';
-  err.location = err.location || 'Unknown';
+  err.location = err.location;
 
   console.log(err.stack);
 
@@ -14,7 +14,7 @@ const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     success: false,
     message: err.message,
     timestamp: new Date().toISOString(),
-    location: NODE_ENV === 'development' ? err.location : null,
+    source: NODE_ENV === 'development' ? err.source : null,
     stack: NODE_ENV === 'development' ? err.stack : null,
   });
 };
