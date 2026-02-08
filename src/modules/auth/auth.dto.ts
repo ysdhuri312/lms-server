@@ -1,7 +1,7 @@
 /** @format */
 
 export interface RegisterUserDTO {
-  userName: string;
+  fullName: string;
   email: string;
   password: string;
 }

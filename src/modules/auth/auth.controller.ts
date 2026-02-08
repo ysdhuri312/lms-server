@@ -5,15 +5,23 @@ import AuthService from './auth.service.js';
 
 class AuthController {
   register = asyncHandler(async (req, res) => {
-    const { userName, email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
-    const user = await AuthService.register({ userName, email, password });
+    const result = await AuthService.register({ fullName, email, password });
 
-    res.status(201).json({
-      success: true,
-      message: 'User register successfully',
-      data: { user },
-    });
+    res
+      .cookie('token', result.token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .status(201)
+      .json({
+        success: true,
+        message: 'User register successfully',
+        data: result.user,
+      });
   });
 }
 

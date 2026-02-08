@@ -1,8 +1,9 @@
 /** @format */
 
+import type { Types } from 'mongoose';
+
 export interface IAuth {
-  _id: string;
-  userName: string;
+  _id: Types.ObjectId;
   email: string;
   password: string;
   provider?: 'local' | 'google';
