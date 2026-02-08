@@ -1,9 +1,9 @@
 /** @format */
 
 import mongoose from 'mongoose';
-import { MONGODB_URI } from '../config/utils.js';
+import { env } from './env.js';
 
-const uri = MONGODB_URI as string;
+const uri = env.MONGODB_URI;
 
 export const connectDB = async () => {
   try {
