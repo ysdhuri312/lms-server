@@ -1,28 +1,61 @@
 /** @format */
 
+import type { Request } from 'express';
 import asyncHandler from '../../handlers/asyncError.js';
 import AuthService from './auth.service.js';
+import type { LoginUserDTO, RegisterUserDTO } from './auth.dto.js';
+import { CustomErrorHandler } from '../../handlers/CustomError.js';
 
 class AuthController {
-  register = asyncHandler(async (req, res) => {
-    const { fullName, email, password } = req.body;
+  static register = asyncHandler(
+    async (req: Request<{}, {}, RegisterUserDTO>, res) => {
+      const { fullName, email, password } = req.body || {};
 
-    const result = await AuthService.register({ fullName, email, password });
+      if (!password || !email || !fullName)
+        throw new CustomErrorHandler(400, 'Enter all fields complsary');
 
-    res
-      .cookie('token', result.token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      })
-      .status(201)
-      .json({
-        success: true,
-        message: 'User register successfully',
-        data: result.user,
-      });
-  });
+      const result = await AuthService.register({ fullName, email, password });
+
+      res
+        .cookie('token', result.token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'strict',
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        })
+        .status(201)
+        .json({
+          success: true,
+          message: `Welcome ${result.user.fullName}`,
+          data: result.user,
+        });
+    },
+  );
+
+  static login = asyncHandler(
+    async (req: Request<{}, {}, LoginUserDTO>, res, next) => {
+      const { email, password } = req.body || {};
+
+      if (!email || !password)
+        throw new CustomErrorHandler(400, 'Enter all fields complsary');
+
+      const result = await AuthService.login({ email, password });
+
+      res
+        .cookie('token', result.token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'strict',
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        })
+        .status(202)
+        .json({
+          success: true,
+          message: `Welcome ${result.user.fullName}`,
+          data: result.user,
+        });
+    },
+  );
 }
 
 export default AuthController;
