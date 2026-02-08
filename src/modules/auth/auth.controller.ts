@@ -56,6 +56,20 @@ class AuthController {
         });
     },
   );
+
+  static logout = asyncHandler((_req, res) => {
+    res
+      .clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+      })
+      .status(200)
+      .json({
+        success: true,
+        message: 'Logged out successfully',
+      });
+  });
 }
 
 export default AuthController;
