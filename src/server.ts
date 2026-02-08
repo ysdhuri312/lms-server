@@ -1,6 +1,7 @@
 /** @format */
 
 import app from './app.js';
+import _colors from 'colors';
 import { env } from './config/env.js';
 import { connectDB, disconnectDB } from './config/db.js';
 
@@ -29,26 +30,26 @@ const startServer = async () => {
     await connectDB();
 
     server = app.listen(port, () => {
-      console.log(`✅ Server running on ${baseUrl}:${port}`); // eslint-disable-line no-console
+      console.log(`✅ Server running on ${baseUrl}:${port}`.green.bold); // eslint-disable-line no-console
     });
 
     server.on('error', async (err) => {
-      console.error('❌ Server error:', err); // eslint-disable-line no-console
+      console.error('❌ Server error:'.red.bold, err); // eslint-disable-line no-console
       await disconnectDB();
       process.exit(1);
     });
   } catch (error) {
-    console.error('❌ Startup failed. Exiting...', error); // eslint-disable-line no-console
+    console.error('❌ Startup failed. Exiting...'.red.bold, error); // eslint-disable-line no-console
     process.exit(1);
   }
 };
 
 const shutdown = async (signal: string) => {
-  console.log(`\n🛑 Received ${signal}. Shutting down...`); // eslint-disable-line no-console
+  console.log(`\n🛑 Received ${signal}. Shutting down...`.red.bold); // eslint-disable-line no-console
 
   if (server) {
     server.close(() => {
-      console.log('🛑 HTTP server closed'); // eslint-disable-line no-console
+      console.log('🛑 HTTP server closed'.red.bold); // eslint-disable-line no-console
     });
   }
 
@@ -60,13 +61,13 @@ process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
 process.on('unhandledRejection', async (reason) => {
-  console.error('❌ Unhandled rejection:', reason); // eslint-disable-line no-console
+  console.error('❌ Unhandled rejection:'.red.bold, reason); // eslint-disable-line no-console
   await disconnectDB();
   process.exit(1);
 });
 
 process.on('uncaughtException', async (err) => {
-  console.error('❌ Uncaught exception:', err); // eslint-disable-line no-console
+  console.error('❌ Uncaught exception:'.red.bold, err); // eslint-disable-line no-console
   await disconnectDB();
   process.exit(1);
 });

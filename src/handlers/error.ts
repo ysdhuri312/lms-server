@@ -4,11 +4,11 @@ import type { ErrorRequestHandler } from 'express';
 import { env } from '../config/env.js';
 
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
-  err.statusCode = err.statusCode || 500;
-  err.message = err.message || 'Internal server error';
+  err.statusCode = err.statusCode;
+  err.message = err.message;
   err.location = err.location;
 
-  console.log('error.ts', err.stack);
+  // console.log('error.ts', err.stack);
 
   res.status(err.statusCode).json({
     success: false,

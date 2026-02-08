@@ -12,14 +12,16 @@ export const connectDB = async () => {
       serverSelectionTimeoutMS: 5000,
     });
 
-    console.log(`✅ Database connected: ${mongoose.connection.host}`); // eslint-disable-line no-console
+    console.log(
+      `✅ Database connected: ${mongoose.connection.host}`.green.bold,
+    ); // eslint-disable-line no-console
   } catch (error) {
-    console.error('❌ Database connection failed'); // eslint-disable-line no-console
+    console.error('❌ Database connection failed'.red); // eslint-disable-line no-console
     throw error;
   }
 };
 
 export const disconnectDB = async () => {
   await mongoose.connection.close();
-  console.log('🔌 Database disconnected'); // eslint-disable-line no-console
+  console.log('🔌 Database disconnected'.green); // eslint-disable-line no-console
 };
