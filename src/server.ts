@@ -1,11 +1,11 @@
 /** @format */
 
 import app from './app.js';
-import { BASE_URL, PORT } from './config/utils.js';
+import { env } from './config/env.js';
 import { connectDB, disconnectDB } from './config/db.js';
 
-const port = PORT;
-const baseUrl = BASE_URL as string;
+const port = env.PORT;
+const baseUrl = env.BASE_URL;
 let server: ReturnType<typeof app.listen> | undefined;
 
 /*
