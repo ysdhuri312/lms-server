@@ -33,7 +33,7 @@ class AuthController {
   );
 
   static login = asyncHandler(
-    async (req: Request<{}, {}, LoginUserDTO>, res, next) => {
+    async (req: Request<{}, {}, LoginUserDTO>, res) => {
       const { email, password } = req.body || {};
 
       if (!email || !password)
