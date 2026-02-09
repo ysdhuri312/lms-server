@@ -9,7 +9,7 @@ import path from 'node:path';
 import errorHandler from './handlers/error.js';
 import { CustomErrorHandler } from './handlers/CustomError.js';
 
-import v1Routes from './routes/v1';
+import v1Routes from './routes/v1/index.js';
 
 const app = express();
 
