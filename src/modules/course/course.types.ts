@@ -15,7 +15,7 @@ export interface ICourse {
       _id: Types.ObjectId;
       title: string;
       moduleDuration: string;
-      lesson: [
+      lessons: [
         {
           _id: Types.ObjectId;
           title: string;
