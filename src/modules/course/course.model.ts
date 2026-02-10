@@ -31,6 +31,8 @@ const courseSchema = new Schema<ICourse>({
     CourseTime: { type: String, required: true },
     totalModules: { type: Number, required: true },
     totalLessons: { type: Number, required: true },
+    ratings: { type: String, required: true },
+    enrolledStudents: { type: Number, required: true },
   },
 });
 

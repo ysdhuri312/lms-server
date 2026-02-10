@@ -31,5 +31,7 @@ export interface ICourse {
     CourseTime: string;
     totalModules: number;
     totalLessons: number;
+    ratings: string;
+    enrolledStudents: number;
   };
 }
