@@ -12,12 +12,14 @@ export interface ICourse {
   price: number;
   modules: [
     {
-      _id: Types.ObjectId;
+      id: Types.ObjectId;
       title: string;
+      slug: string;
       moduleDuration: string;
+      lessonsCount: string;
       lessons: [
         {
-          _id: Types.ObjectId;
+          id: Types.ObjectId;
           title: string;
           duration: string;
           isPreview: boolean;

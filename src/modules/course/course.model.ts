@@ -12,12 +12,14 @@ const courseSchema = new Schema<ICourse>({
   price: { type: Number, required: true },
   modules: [
     {
-      _id: Types.ObjectId,
+      id: Types.ObjectId,
       title: { type: String, required: true },
+      slug: { type: String, required: true, unique: true },
       moduleDuration: { type: String, required: true },
+      lessonsCount: { type: Number, required: true },
       lessons: [
         {
-          _id: Types.ObjectId,
+          id: Types.ObjectId,
           title: { type: String, required: true },
           duration: { type: String, required: true },
           isPreview: { type: Boolean, required: true },
