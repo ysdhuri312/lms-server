@@ -1,6 +1,5 @@
 /** @format */
 
-import type { Request } from 'express';
 import asyncHandler from '../../handlers/asyncError.js';
 import CourseService from './course.service.js';
 
@@ -10,7 +9,7 @@ class CourseController {
 
     res.status(200).json({
       success: true,
-      data: result.courses,
+      courses: result,
     });
   });
 
@@ -21,7 +20,7 @@ class CourseController {
 
     res.status(200).json({
       success: true,
-      data: result.course,
+      course: result,
     });
   });
 }

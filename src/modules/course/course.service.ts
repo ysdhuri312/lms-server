@@ -5,12 +5,12 @@ import { Course } from './course.model.js';
 class CourseService {
   static async getAllCourses() {
     const courses = await Course.find({});
-    return { courses };
+    return courses;
   }
 
   static async getSingleCourse(slug: string) {
     const course = await Course.findOne({ slug });
-    return { course };
+    return course;
   }
 }
 

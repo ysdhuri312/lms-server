@@ -1,5 +1,6 @@
 /** @format */
 
+import cors from 'cors';
 import express, {
   type NextFunction,
   type Request,
@@ -16,6 +17,7 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.static(path.join(path.resolve(), '/public')));
+app.use(cors());
 
 // Home Route
 app.get('/api/v1/', (_req: Request, res: Response) => {
