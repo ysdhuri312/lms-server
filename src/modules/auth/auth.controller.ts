@@ -5,6 +5,7 @@ import asyncHandler from '../../handlers/asyncError.js';
 import AuthService from './auth.service.js';
 import type { LoginUserDTO, RegisterUserDTO } from './auth.dto.js';
 import { CustomErrorHandler } from '../../handlers/CustomError.js';
+import { env } from '../../config/env.js';
 
 class AuthController {
   static register = asyncHandler(
@@ -44,8 +45,8 @@ class AuthController {
       res
         .cookie('token', result.token, {
           httpOnly: true,
-          secure: true,
-          sameSite: 'strict',
+          secure: env.NODE_ENV === 'production',
+          sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax',
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(202)

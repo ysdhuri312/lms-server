@@ -17,7 +17,12 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.static(path.join(path.resolve(), '/public')));
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // frontend URL
+    credentials: true,
+  }),
+);
 
 // Home Route
 app.get('/api/v1/', (_req: Request, res: Response) => {
