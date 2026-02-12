@@ -58,6 +58,20 @@ class AuthController {
     },
   );
 
+  static me = asyncHandler(async (req, res) => {
+    const { token } = req.cookies || {};
+
+    if (!token) throw new CustomErrorHandler(401, 'User must logged in');
+
+    const result = await AuthService.me(token);
+
+    res.status(202).json({
+      success: true,
+      message: `Welcome back !`,
+      data: result.user,
+    });
+  });
+
   static logout = asyncHandler((_req, res) => {
     res
       .clearCookie('token', {

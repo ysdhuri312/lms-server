@@ -11,12 +11,14 @@ import errorHandler from './handlers/error.js';
 import { CustomErrorHandler } from './handlers/CustomError.js';
 
 import v1Routes from './routes/v1/index.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(express.static(path.join(path.resolve(), '/public')));
+app.use(cookieParser());
 app.use(
   cors({
     origin: 'http://localhost:5173', // frontend URL

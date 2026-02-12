@@ -6,7 +6,7 @@ import type { LoginUserDTO, RegisterUserDTO } from './auth.dto.js';
 import { Auth } from './auth.model.js';
 import { User } from '../user/user.model.js';
 import mongoose from 'mongoose';
-import { generateToken } from '../../utils/token.js';
+import { generateToken, verifyToken } from '../../utils/token.js';
 
 class AuthService {
   static async register({ fullName, email, password }: RegisterUserDTO) {
@@ -83,6 +83,11 @@ class AuthService {
       },
       token,
     };
+  }
+
+  static async me(token: string) {
+    const user = verifyToken(token);
+    return user;
   }
 }
 
