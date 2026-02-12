@@ -3,7 +3,6 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import { CustomErrorHandler } from '../handlers/CustomError.js';
-import { userInfo } from 'node:os';
 
 export const generateToken = (paylod: { userId: string; role: string }) => {
   return jwt.sign(paylod, env.JWT_TOKEN_SECRET, {
