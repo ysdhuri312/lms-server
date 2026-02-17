@@ -12,6 +12,7 @@ import { CustomErrorHandler } from './handlers/CustomError.js';
 
 import v1Routes from './routes/v1/index.js';
 import cookieParser from 'cookie-parser';
+import { env } from './config/env.js';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(express.static(path.join(path.resolve(), '/public')));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'http://localhost:5173', // frontend URL
+    origin: env.FRONTEND_URL, // frontend URL
     credentials: true,
   }),
 );
