@@ -4,11 +4,6 @@ import jwt, { type JwtPayload } from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import { CustomErrorHandler } from '../handlers/CustomError.js';
 
-interface AuthPayload extends JwtPayload {
-  userId: string;
-  role: string;
-}
-
 export const generateToken = (paylod: { userId: string; role: string }) => {
   return jwt.sign(paylod, env.JWT_TOKEN_SECRET, {
     expiresIn: '7d',
