@@ -87,7 +87,14 @@ class AuthService {
 
   static async me(token: string) {
     const user = verifyToken(token);
-    return user;
+
+    const userDetails = await User.findById(user.userId)
+      .populate({
+        path: 'authId',
+        select: 'email -_id',
+      })
+      .select('-_id -createdAt -updatedAt -__v');
+    return userDetails;
   }
 }
 

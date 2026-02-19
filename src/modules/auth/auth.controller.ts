@@ -28,7 +28,7 @@ class AuthController {
         .json({
           success: true,
           message: `Welcome ${result.user.fullName}`,
-          data: result.user,
+          user: result.user,
         });
     },
   );
@@ -53,7 +53,7 @@ class AuthController {
         .json({
           success: true,
           message: `Welcome ${result.user.fullName}`,
-          data: result.user,
+          user: result.user,
         });
     },
   );
@@ -68,7 +68,7 @@ class AuthController {
     res.status(202).json({
       success: true,
       message: `Welcome back !`,
-      data: result.user,
+      user: result,
     });
   });
 
