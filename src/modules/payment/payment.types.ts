@@ -4,7 +4,7 @@ import type { Types } from 'mongoose';
 
 export interface IPayment {
   _id: Types.ObjectId;
-  userId: string;
+  userEmail: string;
   courseId: string;
   orderId: string;
   paymentId: string | null;

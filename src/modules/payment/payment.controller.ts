@@ -25,13 +25,13 @@ class PaymentController {
         receipt,
         notes: {
           courseId: course._id.toString(),
-          userId: '6988487ed739306e5070d9e5', // Future changes
+          userEmail: notes.userEmail,
           country: 'India',
         },
       });
 
       await PaymentService.createPayment({
-        userId: notes.userId,
+        userEmail: notes.userEmail,
         courseId: notes.courseId,
         orderId: order.id,
         paymentId: null,

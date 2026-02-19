@@ -6,13 +6,13 @@ export interface CreateOrderDTO {
   receipt: string;
   notes: {
     courseId: string;
-    userId: string;
+    userEmail: string;
     country: string;
   };
 }
 
 export interface CreatePaymentDTO {
-  userId: string;
+  userEmail: string;
   courseId: string;
   orderId: string;
   paymentId: string | null;

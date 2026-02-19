@@ -30,7 +30,7 @@ class PaymentService {
   }
 
   static async createPayment({
-    userId,
+    userEmail,
     courseId,
     orderId,
     amount,
@@ -42,7 +42,7 @@ class PaymentService {
 
     try {
       await new Payment({
-        userId,
+        userEmail,
         courseId,
         orderId,
         amount,
