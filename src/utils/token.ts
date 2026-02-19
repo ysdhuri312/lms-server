@@ -1,8 +1,13 @@
 /** @format */
 
-import jwt from 'jsonwebtoken';
+import jwt, { type JwtPayload } from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import { CustomErrorHandler } from '../handlers/CustomError.js';
+
+interface AuthPayload extends JwtPayload {
+  userId: string;
+  role: string;
+}
 
 export const generateToken = (paylod: { userId: string; role: string }) => {
   return jwt.sign(paylod, env.JWT_TOKEN_SECRET, {
@@ -13,10 +18,14 @@ export const generateToken = (paylod: { userId: string; role: string }) => {
 export const verifyToken = (token: string) => {
   if (!token) throw new CustomErrorHandler(401, 'Token not available');
 
-  const decoded = jwt.verify(token, env.JWT_TOKEN_SECRET, (err, result) => {
-    if (err) throw new CustomErrorHandler(401, 'Invalid token');
-    return result;
-  });
+  const decoded = jwt.verify(token, env.JWT_TOKEN_SECRET) as {
+    userId: string;
+    role: string;
+    iat: number;
+    exp: number;
+  };
 
-  return { user: decoded };
+  if (!decoded) throw new CustomErrorHandler(401, 'Invalid token');
+
+  return decoded;
 };
