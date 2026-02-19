@@ -1,6 +1,6 @@
 /** @format */
 
-import jwt, { type JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import { CustomErrorHandler } from '../handlers/CustomError.js';
 
