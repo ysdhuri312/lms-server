@@ -5,10 +5,10 @@ import type { IEnrollment } from './enrollment.types.js';
 
 const enrollmentSchema = new Schema<IEnrollment>({
   userId: Types.ObjectId,
-  courseId: Types.ObjectId,
+  courseId: { type: Schema.Types.ObjectId, ref: 'Course' },
   progress: {
     completedLessonsIds: { type: [Types.ObjectId], default: [] },
-    completedCount: { type: Number, default: 0 },
+    completedLessonCount: { type: Number, default: 0 },
   },
   status: { type: String, enum: ['Ongoing', 'Completed'], default: 'Ongoing' },
   enrolledAt: Date,

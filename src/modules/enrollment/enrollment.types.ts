@@ -8,7 +8,7 @@ export interface IEnrollment {
   courseId: Types.ObjectId;
   progress: {
     completedLessonsIds: [Types.ObjectId];
-    completedCount: number;
+    completedLessonCount: number;
   };
   status: 'Ongoing' | 'Completed';
   enrolledAt: Date;
